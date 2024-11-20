@@ -1,0 +1,66 @@
+spring:
+    application:
+        name: zync-social-network
+    datasource:
+        password: mysql
+        url: jdbc:mysql://localhost:3307/zync_data
+        username: root
+    jpa:
+        database-platform: org.hibernate.dialect.MySQLDialect
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+        open-in-view: true
+    threads:
+        virtual:
+            enabled: true
+    mail:
+        host: localhost
+        port: 1025
+        username: zync
+        password: zync
+        properties:
+            mail:
+                smtp:
+                    trust: "*"
+                auth: true
+                starttls:
+                    enabled: true
+                connectiontimeout: 5000
+                timeout: 3000
+                writetimeout: 5000
+    messages:
+        basename: i18n/messages
+    config:
+        additional-location: file:/key/keys.yml
+springdoc:
+    api-docs:
+        enabled: true
+    swagger-ui:
+        enabled: true
+
+application:
+    security:
+        jwt:
+            public-key: key/jwt-public.pem
+            private-key: key/jwt-private.pem
+            access-token-age: 10
+            access-token-age-unit: DAYS
+            refresh-token-age: 20
+    media:
+        host: http://localhost:9001
+        storage:
+            tmp: D:\Workspace\Java\monolith\zync-social-network\tmp
+            minio:
+                url: http://localhost:9000
+                access-key: KTcvVaWGnhUTz7XK2sDT
+                secret-key: mvQhO4nD23wWyLe7rTMvME1sIw9ey8Ky3rlFN5ay
+        image:
+            path: /images
+            avatar:
+                width: 600
+                height: 600
+                format: jpg

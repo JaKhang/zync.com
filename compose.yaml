@@ -1,0 +1,32 @@
+services:
+    mysql:
+        container_name: mysql
+        image: mysql:8.0.38
+        ports:
+            - 3307:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: mysql
+            MYSQL_USER: zyncnetwork
+            MYSQL_PASSWORD: zyncnetwork
+            volumes: database:/var/lib/mysql
+            restart: unless-stopped
+    mail-dev:
+        container_name: ms-mail-dev
+        image: maildev/maildev
+        ports:
+            - 1080:1080
+            - 1025:1025
+    minio:
+        image: minio/minio
+        container_name: minio
+        ports:
+            - 9000:9000
+            - 9001:9001
+        volumes:
+            - ./storage:/data
+        environment:
+            MINIO_ROOT_USER: zyncnetwork
+            MINIO_ROOT_PASSWORD: zyncnetwork
+        command: server --console-address ":9001" /data
+volumes:
+    database:
