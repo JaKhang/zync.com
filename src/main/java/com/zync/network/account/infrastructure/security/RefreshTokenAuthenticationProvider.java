@@ -70,13 +70,13 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
 
         public void check(UserDetails user) {
             if (!user.isAccountNonLocked()) {
-                log.debug("Failed to authenticate since user account is locked");
+                log.debug("Failed to authenticate since actor account is locked");
                 throw new LockedException("User account is locked");
             } else if (!user.isEnabled()) {
-                log.debug("Failed to authenticate since user account is disabled");
+                log.debug("Failed to authenticate since actor account is disabled");
                 throw new DisabledException("User is disabled");
             } else if (!user.isAccountNonExpired()) {
-                log.debug("Failed to authenticate since user account has expired");
+                log.debug("Failed to authenticate since actor account has expired");
                 throw new AccountExpiredException("User account has expired");
             }
         }
@@ -88,7 +88,7 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
 
         public void check(UserDetails user) {
             if (!user.isCredentialsNonExpired()) {
-                log.debug("Failed to authenticate since user account credentials have expired");
+                log.debug("Failed to authenticate since actor account credentials have expired");
                 throw new CredentialsExpiredException("User credentials have expired");
             }
         }

@@ -35,12 +35,12 @@ public class DefaultEmailTemplateSender implements EmailTemplateSender{
 
         String subject = messageSource.getMessage("email.verification.subject", new Object[]{}, context.getLocale());
         log.info(htmlContent);
-        // Set email properties
+        // Set usernameOrEmail properties
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlContent, true); // Set true for HTML content
 
-        // Send the email
+        // Send the usernameOrEmail
         mailSender.send(mimeMessage);
     }
 }

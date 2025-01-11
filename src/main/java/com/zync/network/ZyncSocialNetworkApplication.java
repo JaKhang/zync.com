@@ -1,18 +1,18 @@
 package com.zync.network;
 
-import com.zync.network.media.infrastructure.config.MediaProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.modulith.Modulithic;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
 @SpringBootApplication
 @Modulithic
 @EnableJpaAuditing
 @EnableAsync
-@EnableConfigurationProperties({MediaProperties.class})
+@EnableWebSocketMessageBroker
 public class ZyncSocialNetworkApplication {
 
     public static void main(String[] args) {
@@ -33,8 +33,8 @@ public class ZyncSocialNetworkApplication {
 //
 //            }
 //            if (!roleRepository.existsByName(RoleName.USER)) {
-//                Role user = new Role(ZID.fast(), RoleName.USER, Collections.emptySet());
-//                user = roleRepository.save(user);
+//                Role actor = new Role(ZID.fast(), RoleName.USER, Collections.emptySet());
+//                actor = roleRepository.save(actor);
 //            }
 //
 //            if (!accountRepository.existsByEmail("zync@zync.com")) {

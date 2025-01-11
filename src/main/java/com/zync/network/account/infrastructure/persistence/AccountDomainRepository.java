@@ -6,7 +6,6 @@ import com.zync.network.core.domain.ZID;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.simpleframework.xml.Default;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -23,9 +22,19 @@ public class AccountDomainRepository implements AccountRepository {
     }
 
     @Override
+    public Optional<Account> findByUsernameOrEmail(String usernameOrEmail) {
+        return accountJpaRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        // TODO (PC, 29/11/2024): To change the body of an implemented method
+        return accountJpaRepository.existsByUsername(username);
+    }
+
+    @Override
     public Optional<Account> findByEmail(String email) {
-        // TODO (PC, 08/10/2024): To change the body of an implemented method
-        return accountJpaRepository.findByEmail(email);
+        return accountJpaRepository.findByUsernameOrEmail(email, email);
     }
 
     @Override

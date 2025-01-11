@@ -1,7 +1,7 @@
 package com.zync.network.media.application.commands;
 
 import com.zync.network.core.domain.ZID;
-import com.zync.network.core.mediator.Request;
+import com.zync.network.core.mediator.MediatorRequest;
 import com.zync.network.media.domain.Dimension;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +12,6 @@ public record UploadImageCommand(
         ZID userId,
         Dimension dimension,
         List<Dimension> variants
-) implements Request<ZID> {
+) implements MediatorRequest<ZID> {
 
 }

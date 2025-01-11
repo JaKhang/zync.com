@@ -27,7 +27,7 @@ public class RequestCodeCommandHandler implements RequestHandler<RequestCodeComm
 
     @Override
     public Boolean handle(RequestCodeCommand command) {
-        Account account = accountRepository.findByEmail(command.email()).orElseThrow(() -> new UsernameNotFoundException("not found user"));
+        Account account = accountRepository.findByEmail(command.email()).orElseThrow(() -> new UsernameNotFoundException("not found actor"));
         String code = codeGenerator.generate();
         account.addCode(code, 5, command.codeType());
         accountRepository.save(account);

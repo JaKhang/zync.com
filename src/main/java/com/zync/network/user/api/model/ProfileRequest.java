@@ -1,13 +1,12 @@
 package com.zync.network.user.api.model;
 
-import java.time.LocalDate;
+import java.util.Set;
 
 public record ProfileRequest(
-        String email,
-        String password,
+        String bio,
+        Set<String> links,
         String firstName,
         String lastName,
-        String middleName,
-        LocalDate dateOfBirth
+        String middleName
 ) {
 }

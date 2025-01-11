@@ -6,6 +6,7 @@ import com.zync.network.media.domain.events.VariantCreatedEvent;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ import java.util.List;
 
 public class Image extends Media{
     @Getter
-    Dimension dimension;
+    @Setter
+    Dimension dimension = new Dimension(0,0);
     @ElementCollection
     List<Variant> variants = new ArrayList<>();
 

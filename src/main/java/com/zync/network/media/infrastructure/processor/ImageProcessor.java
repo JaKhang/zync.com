@@ -9,6 +9,8 @@ public interface ImageProcessor {
 
     void test();
 
+
+
 }
 
 

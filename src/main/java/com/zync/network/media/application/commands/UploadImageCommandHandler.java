@@ -56,7 +56,7 @@ public class UploadImageCommandHandler implements RequestHandler<UploadImageComm
     public ZID handle(UploadImageCommand request) {
         // save to database
         final ZID id = mediator.send(new CreateImageCommand(ZID.fast(), request.userId(), List.of(), 0, "", false, null, MediaType.parseMediaType(request.file().getContentType())));
-
+        System.out.println(request.file());
         // save to tmp
         Path src = this.storeToTmp(request.file(), id);
 

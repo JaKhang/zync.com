@@ -12,6 +12,6 @@ public class ZIDSerializer extends JsonSerializer<ZID> {
 
     @Override
     public void serialize(ZID ZID, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(ZID.toLowerCase());
+        jsonGenerator.writeString(ZID.toString());
     }
 }

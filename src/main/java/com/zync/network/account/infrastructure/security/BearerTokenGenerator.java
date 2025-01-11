@@ -27,25 +27,24 @@ public class BearerTokenGenerator implements TokenGenerator {
 
     @Override
     public Jwt generate(JwtPrincipal account, TokenType type) {
-
         JwtClaimsSet claimsSet = switch (type) {
             case ACCESS -> JwtClaimsSet.builder()
                     .issuer("zync")
                     .claim("type", type.toString())
-                    .subject(account.id().toLowerCase())
+                    .subject(account.id().toString())
                     .expiresAt(Instant.now().plus(5, ChronoUnit.MINUTES))
                     .issuedAt(Instant.now())
-                    .id(ZID.fast().toLowerCase())
+                    .id(ZID.fast().toString())
                     .claim("authorities", account.authorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
                     .build();
             case REFRESH -> JwtClaimsSet.builder()
                     .issuer("zync")
                     .claim("type", type.toString())
-                    .claim("device", account.deviceId().toLowerCase())
-                    .subject(account.id().toLowerCase())
+                    .claim("device", account.deviceId().toString())
+                    .subject(account.id().toString())
                     .expiresAt(Instant.now().plus(30, ChronoUnit.DAYS))
                     .issuedAt(Instant.now())
-                    .id(ZID.fast().toLowerCase())
+                    .id(ZID.fast().toString())
                     .build();
         };
         return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet));
@@ -57,10 +56,10 @@ public class BearerTokenGenerator implements TokenGenerator {
                 .issuer(ISSUER)
                 .claim(TOKEN_TYPE_CLAIM_NAME, TokenType.ACCESS)
                 .claim(AUTHORITIES_CLAIM_NAME,context.getAuthorities())
-                .subject(context.getAccountId().toLowerCase())
+                .subject(context.getAccountId().toString())
                 .expiresAt(Instant.now().plus(context.getAge(), context.getAgeUnit()))
                 .issuedAt(Instant.now())
-                .id(context.getTokenId().toLowerCase())
+                .id(context.getTokenId().toString())
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(claims));
     }
@@ -70,11 +69,11 @@ public class BearerTokenGenerator implements TokenGenerator {
         var claims = JwtClaimsSet.builder()
                 .issuer(ISSUER)
                 .claim(TOKEN_TYPE_CLAIM_NAME, TokenType.REFRESH)
-                .claim(DEVICE_CLAIM_NAME, context.getDeviceId().toLowerCase())
-                .subject(context.getAccountId().toLowerCase())
+                .claim(DEVICE_CLAIM_NAME, context.getDeviceId().toString())
+                .subject(context.getAccountId().toString())
                 .expiresAt(Instant.now().plus(context.getAge(), context.getAgeUnit()))
                 .issuedAt(Instant.now())
-                .id(context.getTokenId().toLowerCase())
+                .id(context.getTokenId().toString())
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(claims));
     }

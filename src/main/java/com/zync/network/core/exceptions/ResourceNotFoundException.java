@@ -6,10 +6,10 @@ public class ResourceNotFoundException extends AbstractSystemException {
     public String field;
     private String value;
 
-    public ResourceNotFoundException(String resourceName, String field, String value) {
+    public ResourceNotFoundException(String resourceName, String field, Object value) {
         this.resourceName = resourceName;
         this.field = field;
-        this.value = value;
+        this.value = value.toString();
     }
 
     @Override
@@ -21,4 +21,6 @@ public class ResourceNotFoundException extends AbstractSystemException {
     public String getMessage() {
         return getError().getMessage().formatted(resourceName, resourceName + ":" + field + ":" + value);
     }
+
+
 }

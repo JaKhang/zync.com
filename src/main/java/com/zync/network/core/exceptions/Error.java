@@ -24,12 +24,15 @@ public enum Error {
     CODE_EXPIRED(1012, 401, "Code has expired"),
     ACCOUNT_VERIFIED(1012, 400, "Account already verified"),
     EMAIL_ALREADY_USED(1013, 400, "Email already used"),
+    USERNAME_ALREADY_USED(1013, 400, "Email already used"),
     DEVICE_INVALID(1014, 401, "Invalid Login device"),
+    PERMISSION_DENIED(1015, 401, "Permission denied"),
     BAD_ACTION(2000, 400, "Bad action"),
     RESOURCE_NOT_FOUND(2001, 404, "%s not found with %s "),
     NEW_PASSWORD_INVALID(2002, 400, "New password must not same old password"),
     BAD_ACCOUNT_IDENTITY(2003, 400, "invalid account identity"),
-    MEDIA_TYPE_NOT_VALID(2004, 400, "Media is not valid" );
+    MEDIA_TYPE_NOT_VALID(2004, 400, "Media is not valid" ),
+    BAD_REQUEST(2005, 400, "Invalid Request");
 
     Error(int errorCode, int httpCode, String message) {
         this.errorCode = errorCode;

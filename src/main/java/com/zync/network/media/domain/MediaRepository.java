@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface MediaRepository extends DomainRepository<Media> {
 
-
     void deleteAll(List<ZID> ids);
 }

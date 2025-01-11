@@ -11,10 +11,10 @@ import org.springframework.http.MediaType;
 @Entity
 @Table
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
 public abstract class Media extends AggregateRoot {
     ZID uploadBy;
     long size;
-    @Getter
     String reference;
     boolean uploaded;
     String mediaType;
@@ -30,6 +30,13 @@ public abstract class Media extends AggregateRoot {
         this.reference = reference;
         this.uploaded = uploaded;
         this.mediaType = mediaType;
+    }
+
+    public void update(long size, String mediaType, String reference, boolean uploaded){
+        this.size = size;
+        this.mediaType = mediaType;
+        this.reference = reference;
+        this.uploaded = uploaded;
     }
 
 }

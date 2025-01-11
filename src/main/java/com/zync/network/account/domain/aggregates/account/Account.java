@@ -12,7 +12,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +19,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -34,6 +35,7 @@ public class Account extends AggregateRoot implements UserDetails {
     String email;
     @Getter
     String password;
+    String username;
     LocalDateTime verifiedAt;
     LocalDateTime lastLoginAt;
 
@@ -58,8 +60,9 @@ public class Account extends AggregateRoot implements UserDetails {
     @JoinTable(joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = {@JoinColumn(name = "role_id")})
     Set<Role> roles = new HashSet<>();
 
-    public Account(ZID id, String email, String password, Set<Role> roles) {
+    public Account(ZID id, String username, String email, String password, Set<Role> roles) {
         super(id);
+        this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -174,7 +177,7 @@ public class Account extends AggregateRoot implements UserDetails {
     @Override
     public String toString() {
         return "Account{" +
-                "email='" + email + '\'' +
+                "usernameOrEmail='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
@@ -187,7 +190,7 @@ public class Account extends AggregateRoot implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     public Device getDevice(String os, String browser) {

@@ -12,9 +12,14 @@ public interface AccountRepository  {
     boolean existsByEmail(String email);
 
 
-    Optional<Account> findByEmail(String email);
 
     ZID save(Account account);
 
     Optional<Account> findById(ZID zid);
+
+    Optional<Account> findByUsernameOrEmail(String usernameOrEmail);
+
+    boolean existsByUsername(String username);
+
+    Optional<Account> findByEmail(String email);
 }

@@ -7,4 +7,5 @@ public interface DomainRepository<T extends AggregateRoot>{
     Optional<T> findById(ZID id);
     void delete(ZID id);
     ZID save(T t);
+
 }

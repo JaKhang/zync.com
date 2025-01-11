@@ -10,14 +10,12 @@ import com.zync.network.account.infrastructure.security.RefreshTokenContext;
 import com.zync.network.account.infrastructure.security.TokenGenerator;
 import com.zync.network.core.domain.ZID;
 import com.zync.network.core.mediator.RequestHandler;
-import com.zync.network.core.security.JwtPrincipal;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -41,7 +39,7 @@ public class AuthenticateCommandHandler implements RequestHandler<AuthenticateCo
 
     @Override
     public AuthenticationPayload handle(AuthenticateCommand command) {
-        Account account = authenticate(command.email(), command.password(), command.twoFactorCode());
+        Account account = authenticate(command.usernameOrEmail(), command.password(), command.twoFactorCode());
         ZID deviceId = detectDevice(account, command.ip(), command.os(), command.browser());
         AccessTokenContext accessTokenContext = AccessTokenContext.builder()
                 .age(30)
@@ -77,7 +75,7 @@ public class AuthenticateCommandHandler implements RequestHandler<AuthenticateCo
     }
 
     private Account authenticate(String email, String password, @Nullable String twoFactorCode) {
-        Account account = accountRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Not found account with email"));
+        Account account = accountRepository.findByUsernameOrEmail(email).orElseThrow(() -> new UsernameNotFoundException("Not found account with usernameOrEmail"));
 
         if (!passwordEncoder.matches(password, account.getPassword()))
             throw new BadCredentialsException("Password is Invalid !");

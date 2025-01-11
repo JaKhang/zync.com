@@ -6,11 +6,12 @@ import com.zync.network.core.mediator.Handler;
 import com.zync.network.core.mediator.RequestHandler;
 import com.zync.network.media.application.clients.MediaClient;
 import com.zync.network.media.application.clients.DimensionRequest;
-import com.zync.network.user.domain.profile.Profile;
-import com.zync.network.user.domain.profile.ProfileRepository;
+import com.zync.network.user.domain.user.User;
+import com.zync.network.user.domain.user.UserRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -18,26 +19,27 @@ import java.util.List;
 public class UploadAvatarCommandHandler implements RequestHandler<UploadAvatarCommand, ZID> {
 
     MediaClient mediaClient;
-    ProfileRepository profileRepository;
+    UserRepository userRepository;
     int avatarHeight;
     int avatarWith;
 
     public UploadAvatarCommandHandler(MediaClient mediaClient,
-                                      ProfileRepository profileRepository,
+                                      UserRepository userRepository,
                                       @Value("${application.media.image.avatar.height}") int avatarHeight,
                                       @Value("${application.media.image.avatar.width}") int avatarWith
     ) {
         this.mediaClient = mediaClient;
-        this.profileRepository = profileRepository;
+        this.userRepository = userRepository;
         this.avatarHeight = avatarHeight;
         this.avatarWith = avatarWith;
     }
 
     @Override
+    @Transactional
     public ZID handle(UploadAvatarCommand request) {
-        Profile profile = profileRepository.findById(request.userId()).orElseThrow(()-> new ResourceNotFoundException("USER", "Id", request.userId().toLowerCase()));
+        User user = userRepository.findById(request.userId()).orElseThrow(()-> new ResourceNotFoundException("USER", "Id", request.userId().toLowerCase()));
         ZID avatar = mediaClient.uploadImage(request.file(), request.userId(), new DimensionRequest(avatarWith, avatarHeight), List.of());
-        profile.setAvatarId(avatar);
-        return profileRepository.save(profile);
+        user.setAvatarId(avatar);
+        return userRepository.save(user);
     }
 }

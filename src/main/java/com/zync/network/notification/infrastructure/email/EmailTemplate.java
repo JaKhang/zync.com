@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum EmailTemplate {
-    VERIFY("verification", "email.verify.subject"),
+    VERIFY("verification", "usernameOrEmail.verify.subject"),
     REST_PASSWORD("reset-password", "email.reset-password.subject");
 
      EmailTemplate(String template, String subject) {

@@ -1,5 +1,7 @@
 package com.zync.network.core.domain;
 
 public interface DomainEvent {
-    Class<? extends AggregateRoot> domainClass();
+    default Class<? extends AggregateRoot> domainClass() {
+        return AggregateRoot.class;
+    }
 }

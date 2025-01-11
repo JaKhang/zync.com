@@ -57,7 +57,15 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authEntryPoint))
                 .authorizeHttpRequests(configurer -> configurer
-                        .requestMatchers("/api/v1/auth/**", "/api/v1/auth", "/test/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/api/v1/auth",
+                                "/api/v1/users/register",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/ws/**",
+                                "/ws")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -82,7 +90,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userService(AccountJpaRepository accountRepository) {
-        return username -> accountRepository.findByEmail(username).orElseThrow();
+        return username -> accountRepository.findByUsernameOrEmail(username, username).orElseThrow();
     }
 
     @Bean

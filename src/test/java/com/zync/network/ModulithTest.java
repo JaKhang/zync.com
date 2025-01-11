@@ -2,7 +2,6 @@ package com.zync.network;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.modulith.core.ApplicationModules;
-import org.springframework.modulith.docs.Documenter;
 
 public class ModulithTest {
 
@@ -13,10 +12,6 @@ public class ModulithTest {
         System.out.println(modules.toString());
         System.out.println("test");
         modules.verify();
-        new Documenter(modules)
-                .writeModulesAsPlantUml()
-                .writeIndividualModulesAsPlantUml()
-                .writeAggregatingDocument()
-                .writeModuleCanvases();
+
     }
 }

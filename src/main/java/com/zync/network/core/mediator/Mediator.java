@@ -1,8 +1,8 @@
 package com.zync.network.core.mediator;
 
 public interface Mediator {
-    void send(Notification notification);
+    void send(MediatorNotification mediatorNotification);
 
-    <T>T send(Request<T> request);
+    <T>T send(MediatorRequest<T> mediatorRequest);
 
 }

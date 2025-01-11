@@ -15,11 +15,9 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class DefaultAccountClient implements AccountClient {
-
     Mediator mediator;
-
     @Override
-    public ZID register(AccountRegisterRequest request) {
-        return mediator.send(new RegisterCommand(request.email(), request.password(), Set.of(RoleName.USER)));
+    public ZID register(AccountRequest request) {
+        return mediator.send(new RegisterCommand(request.username(), request.email(), request.password(), Set.of(RoleName.USER)));
     }
 }
